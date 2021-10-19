@@ -1,0 +1,71 @@
+<%= form_with(model: person, local: true) do |form| %>
+  <% if person.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(person.errors.count, "error") %> prohibited this person from being saved:</h2>
+
+      <ul>
+      <% person.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :age %>
+    <%= form.number_field :age %>
+  </div>
+
+  <%= form.fields_for :address do |f| %>
+
+    <div class="field">
+      <%= f.label :cep %>
+      <%= f.text_field :cep, id: "cep" %>
+    </div>
+
+    <%= link_to "Search", cep_path, id: "link", remote: true, local: false %>
+
+    <div class="field">
+      <%= f.label :logradouro %>
+      <%= f.text_field :logradouro, id: "logradouro" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :complemento %>
+      <%= f.text_field :complemento, id: "complemento" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :bairro %>
+      <%= f.text_field :bairro, id: "bairro" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :localidade %>
+      <%= f.text_field :localidade, id: "localidade"%>
+    </div>
+
+    <div class="field">
+      <%= f.label :uf %>
+      <%= f.text_field :uf, id: "uf" %>
+    </div>
+
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<script>
+    var c = document.getElementById("cep");
+    var l = document.getElementById("link");
+    c.addEventListener("change", function(){
+      l.href = "<%= cep_path %>?cep=" + c.value
+    });
+</script>

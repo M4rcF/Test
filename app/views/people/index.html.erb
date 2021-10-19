@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<h1 id="title">People</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Cep</th>
+      <th>Logradouro</th>
+      <th>Complemento</th>
+      <th>Bairro</th>
+      <th>Localidade</th>
+      <th>UF</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @people.each do |person| %>
+      <tr>
+        <td><%= person.name %></td>
+        <td><%= person.age %></td>
+        <td><%= person.address.cep %></td>
+        <td><%= person.address.logradouro %></td>
+        <td><%= person.address.complemento %></td>
+        <td><%= person.address.bairro %></td>
+        <td><%= person.address.localidade %></td>
+        <td><%= person.address.uf %></td>
+        <td><%= link_to 'Show', person %></td>
+        <td><%= link_to 'Edit', edit_person_path(person) %></td>
+        <td><%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Person', new_person_path %>
+<%= link_to 'Secret', secret_path%>
+<%= link_to 'Csv', people_path(format: :csv) %>
+<%= link_to 'Xls', people_path(format: :xls) %>
+<%= link_to 'Xlsx', people_path(format: :xlsx) %>
+
+<%= form_tag import_people_path, multipart: true  do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>
